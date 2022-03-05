@@ -239,10 +239,10 @@ int ODriveUSB::endpointOperation(libusb_device_handle* odrive_handle, short endp
   short sequence_number = sequence_number_;
 
   bytes request_packet = encodePacket(sequence_number, endpoint_id, response_size, request_payload);
-  std::cout << "[odrive_usb.cpp] libusb_bulk_transfer 1 pre";
+  // std::cout << "[odrive_usb.cpp] libusb_bulk_transfer 1 pre";
   int ret = libusb_bulk_transfer(odrive_handle, ODRIVE_OUT_ENDPOINT, request_packet.data(), request_packet.size(),
                                  &transferred, 0);
-  std::cout << "[odrive_usb.cpp] libusb_bulk_transfer 1 post";
+  // std::cout << "[odrive_usb.cpp] libusb_bulk_transfer 1 post";
   if (ret != LIBUSB_SUCCESS)
   {
     return ret;
@@ -250,10 +250,10 @@ int ODriveUSB::endpointOperation(libusb_device_handle* odrive_handle, short endp
 
   if (MSB)
   {
-    std::cout << "[odrive_usb.cpp] libusb_bulk_transfer 2 pre";
+    // std::cout << "[odrive_usb.cpp] libusb_bulk_transfer 2 pre";
     ret =
         libusb_bulk_transfer(odrive_handle, ODRIVE_IN_ENDPOINT, response_data, ODRIVE_MAX_PACKET_SIZE, &transferred, 0);
-    std::cout << "[odrive_usb.cpp] libusb_bulk_transfer 2 post";
+    // std::cout << "[odrive_usb.cpp] libusb_bulk_transfer 2 post";
     if (ret != LIBUSB_SUCCESS)
     {
       return ret;
