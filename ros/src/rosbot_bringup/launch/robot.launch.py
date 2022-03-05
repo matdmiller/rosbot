@@ -55,17 +55,17 @@ def generate_launch_description():
             description="Start joystick teleop automatically with the launch file",
         ),
 
-        DeclareLaunchArgument(
-            "joy_dev",
-            default_value="/dev/input/js0",
-            description="Joystick device to use",
-        ),
+        # DeclareLaunchArgument(
+        #     "joy_dev",
+        #     default_value="/dev/input/js0",
+        #     description="Joystick device to use",
+        # ),
 
-        DeclareLaunchArgument(
-            "lidar_dev",
-            default_value="/dev/ttyS0",
-            description="Lidar device to use",
-        ),
+        # DeclareLaunchArgument(
+        #     "lidar_dev",
+        #     default_value="/dev/ttyS0",
+        #     description="Lidar device to use",
+        # ),
 
         # ros2 control used by differential drive
         Node(
@@ -105,27 +105,27 @@ def generate_launch_description():
         ),
 
         # lidar
-        Node(
-            package="rplidar_ros2",
-            executable="rplidar_scan_publisher",
-            name="rplidar_scan_publisher",
-            parameters=[{
-                "serial_port": lidar_dev,
-                "serial_baudrate": 256000,
-                "frame_id": "base_laser",
-                "inverted": False,
-                # "angle_compensate": False
-                "angle_compensate": True
-            }],
-            output="screen"
-        ),
+        # Node(
+        #     package="rplidar_ros2",
+        #     executable="rplidar_scan_publisher",
+        #     name="rplidar_scan_publisher",
+        #     parameters=[{
+        #         "serial_port": lidar_dev,
+        #         "serial_baudrate": 256000,
+        #         "frame_id": "base_laser",
+        #         "inverted": False,
+        #         # "angle_compensate": False
+        #         "angle_compensate": True
+        #     }],
+        #     output="screen"
+        # ),
 
         # imu (used by robot_localization to make odometry more precise)
-        Node(
-            package="bno055",
-            executable="bno055",
-            parameters=[bno055_config],
-        ),
+        # Node(
+        #     package="bno055",
+        #     executable="bno055",
+        #     parameters=[bno055_config],
+        # ),
 
         # fuses imu and odometry to produce more precise filtered odometry
         # Node(
@@ -136,22 +136,22 @@ def generate_launch_description():
         #     parameters=[robot_localization_config]
         # ),
 
-        # joystick, used by onboard teleop
-        Node(
-            package="joy",
-            executable="joy_node",
-            name="joy_node_robot",
-            parameters=[{
-                "dev": joy_dev,
-                "deadzone": 0.1,
-                "autorepeat_rate": 20.0,
-            }],
-            # remap joy topic to allow to co-exist with another joystick
-            remappings={
-                ("/joy", "/joy_robot")
-            },
-            condition=IfCondition(launch_teleop),
-        ),
+        # # joystick, used by onboard teleop
+        # Node(
+        #     package="joy",
+        #     executable="joy_node",
+        #     name="joy_node_robot",
+        #     parameters=[{
+        #         "dev": joy_dev,
+        #         "deadzone": 0.1,
+        #         "autorepeat_rate": 20.0,
+        #     }],
+        #     # remap joy topic to allow to co-exist with another joystick
+        #     remappings={
+        #         ("/joy", "/joy_robot")
+        #     },
+        #     condition=IfCondition(launch_teleop),
+        # ),
 
         # onboard teleop
         Node(
